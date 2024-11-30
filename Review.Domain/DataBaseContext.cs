@@ -23,7 +23,7 @@ namespace Reviews.Domain
                         .HasForeignKey(p => p.RatingId)
                         .OnDelete(DeleteBehavior.Cascade);
 
-            var reviews = Initialization.SetFeedbacks();
+            var reviews = Initialization.SetReviews();
             var ratings = Initialization.SetRatings();
 
             modelBuilder.Entity<Review>()
