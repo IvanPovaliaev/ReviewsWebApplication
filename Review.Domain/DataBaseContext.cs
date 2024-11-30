@@ -12,7 +12,7 @@ namespace Reviews.Domain
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,8 +23,12 @@ namespace Reviews.Domain
                         .HasForeignKey(p => p.RatingId)
                         .OnDelete(DeleteBehavior.Cascade);
 
-            var reviews = Initialization.SetReviews();
-            var ratings = Initialization.SetRatings();
+            var initialization = new Initialization();
+
+            var reviews = initialization.SetReviews()
+                                        .ToList();
+
+            var ratings = initialization.SetRatings(reviews);
 
             modelBuilder.Entity<Review>()
                         .HasData(reviews);

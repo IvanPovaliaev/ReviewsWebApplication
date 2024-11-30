@@ -25,11 +25,16 @@
         /// </summary>
         public List<Review> Reviews { get; set; }
 
-        public double Grade { get; set; }
+        public double Grade { get; private set; }
 
         public Rating()
         {
             Reviews = new List<Review>();
+        }
+
+        public void UpdateGrade()
+        {
+            Grade = Math.Round(Reviews.Average(r => r.Grade), 2);
         }
     }
 }

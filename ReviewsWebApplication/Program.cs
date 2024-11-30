@@ -47,7 +47,7 @@ internal class Program
     });
         });
         var connectionString = builder.Configuration.GetConnectionString("Review_Database");
-        builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString));
+        builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
         builder.Services.AddScoped<IReviewService, ReviewService>();
         builder.Services.AddScoped<ICacheService, CacheService>();
