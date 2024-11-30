@@ -2,11 +2,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Review.Domain;
-using Review.Domain.Interfaces;
-using Review.Domain.Services;
+using Reviews.Application.Interfaces;
+using Reviews.Application.Services;
+using Reviews.Domain;
+using Reviews.Domain.Interfaces;
 using System.Text;
-using ConfigurationManager = Review.Domain.Services.ConfigurationManager;
+using ConfigurationManager = Reviews.Application.Services.ConfigurationManager;
 
 internal class Program
 {

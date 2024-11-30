@@ -1,6 +1,6 @@
-﻿using Review.Domain.Models;
+﻿using Reviews.Application.Models;
 
-namespace Review.Domain.Interfaces
+namespace Reviews.Application.Interfaces
 {
     public interface ILoginService
     {
@@ -9,6 +9,6 @@ namespace Review.Domain.Interfaces
         /// </summary>
         /// <param name="login">Логин</param>
         /// <returns>True, если логин валидный; иначе - false</returns>
-        bool CheckLogin(Login login);
+        bool CheckLogin(LoginDTO login);
     }
 }

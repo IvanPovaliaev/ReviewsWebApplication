@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Review.Domain.Interfaces;
+using Reviews.Domain;
+using Reviews.Domain.Interfaces;
+using Reviews.Domain.Models;
 
-namespace Review.Domain.Services
+namespace Reviews.Application.Services
 {
     public class ReviewService : IReviewService
     {
@@ -11,14 +13,17 @@ namespace Review.Domain.Services
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<List<Models.Review>> GetFeedbacks(int id)
+
+        public async Task<List<Review>> GetFeedbacks(int id)
         {
-            return await databaseContext.Feedbacks.ToListAsync();
+            return await databaseContext.Reviews
+                                        .Where(r => r.Status != FeedbackStatus.Deleted)
+                                        .ToListAsync();
         }
 
-        public async Task<IEnumerable<Models.Review?>> GetReviewAsync(int id, int productId)
+        public async Task<IEnumerable<Review?>> GetReviewAsync(int id, int productId)
         {
-            return await databaseContext.Feedbacks.Where(x => x.Id == id)
+            return await databaseContext.Reviews.Where(x => x.Id == id)
                                                   .ToListAsync();
         }
 
@@ -26,10 +31,10 @@ namespace Review.Domain.Services
         {
             try
             {
-                var Review = await databaseContext.Feedbacks.Where(x => x.Id == id)
+                var Review = await databaseContext.Reviews.Where(x => x.Id == id)
                                                             .FirstOrDefaultAsync();
 
-                databaseContext.Feedbacks.Remove(Review!);
+                databaseContext.Reviews.Remove(Review!);
                 await databaseContext.SaveChangesAsync();
                 return true;
             }

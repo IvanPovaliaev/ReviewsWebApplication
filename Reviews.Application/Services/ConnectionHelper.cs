@@ -1,6 +1,6 @@
 ﻿using StackExchange.Redis;
 
-namespace Review.Domain.Services
+namespace Reviews.Application.Services
 {
     public class ConnectionHelper
     {

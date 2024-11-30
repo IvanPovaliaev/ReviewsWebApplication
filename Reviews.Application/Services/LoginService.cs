@@ -1,7 +1,8 @@
-﻿using Review.Domain.Interfaces;
-using Review.Domain.Models;
+﻿using Reviews.Application.Interfaces;
+using Reviews.Application.Models;
+using Reviews.Domain;
 
-namespace Review.Domain.Services
+namespace Reviews.Application.Services
 {
     public class LoginService : ILoginService
     {
@@ -12,7 +13,7 @@ namespace Review.Domain.Services
             this.databaseContext = databaseContext;
         }
 
-        public bool CheckLogin(Login login)
+        public bool CheckLogin(LoginDTO login)
         {
             var containsLogin = databaseContext.Logins;
 

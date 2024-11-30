@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Review.Domain.Services
+namespace Reviews.Application.Services
 {
     public static class ConfigurationManager
     {

@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Review.Domain\Review.Domain.csproj" />
+    <ProjectReference Include="..\Reviews.Application\Reviews.Application.csproj" />
   </ItemGroup>
 
 </Project>

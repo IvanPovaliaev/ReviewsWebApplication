@@ -1,4 +1,6 @@
-﻿namespace Review.Domain.Interfaces
+﻿using Reviews.Domain.Models;
+
+namespace Reviews.Domain.Interfaces
 {
     public interface IReviewService
     {
@@ -7,15 +9,15 @@
         /// </summary>
         /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<List<Models.Review>> GetFeedbacks(int productId);
+        Task<List<Review>> GetFeedbacks(int productId);
 
         /// <summary>
-        /// Получение все отзывов по продукту
+        /// Получение всех отзывов по продукту
         /// </summary>
         /// <param name="id">Id отзыва</param>
         /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<IEnumerable<Models.Review?>> GetReviewAsync(int id, int productId);
+        Task<IEnumerable<Review?>> GetReviewAsync(int id, int productId);
 
         /// <summary>
         /// Удаление отзыва

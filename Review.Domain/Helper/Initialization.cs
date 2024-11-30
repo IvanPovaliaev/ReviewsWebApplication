@@ -1,27 +1,27 @@
-﻿using Review.Domain.Models;
+﻿using Reviews.Domain.Models;
 
-namespace Review.Domain.Helper
+namespace Reviews.Domain.Helper
 {
     public static class Initialization
     {
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-        public static Models.Review[] SetFeedbacks()
+        public static Review[] SetFeedbacks()
         {
             var count = 100;
             var random = new Random();
-            var result = new List<Models.Review>(count);
+            var result = new List<Review>(count);
             for (int i = 1; i <= count; i++)
             {
-                Models.Review f = CreateFeedback(random, i);
+                Review f = CreateFeedback(random, i);
                 result.Add(f);
             }
             return result.ToArray();
         }
 
-        public static Models.Review CreateFeedback(Random random, int i)
+        public static Review CreateFeedback(Random random, int i)
         {
-            return new Models.Review()
+            return new Review()
             {
                 Id = i,
                 CreationDate = DateTime.Now.AddDays(random.Next(-100, 0)),
@@ -49,9 +49,9 @@ namespace Review.Domain.Helper
 
         public static Rating CreateRating(Random random, int i)
         {
-            Models.Review f = CreateFeedback(random, i);
+            Review f = CreateFeedback(random, i);
             var couuntF = random.Next(1, 10);
-            var feedbacs = new List<Models.Review>(couuntF);
+            var feedbacs = new List<Review>(couuntF);
 
             for (int k = 1; k <= couuntF; k++)
             {

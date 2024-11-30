@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Review.Domain.Interfaces;
-using Review.Domain.Models;
+using Reviews.Application.Interfaces;
+using Reviews.Application.Models;
+using Reviews.Domain.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ConfigurationManager = Review.Domain.Services.ConfigurationManager;
+using ConfigurationManager = Reviews.Application.Services.ConfigurationManager;
 
 namespace ReviewsWebApplication.Controllers
 {
@@ -21,14 +22,14 @@ namespace ReviewsWebApplication.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] Login user)
+        public IActionResult Login([FromBody] LoginDTO login)
         {
-            if (user is null)
+            if (login is null)
             {
                 return BadRequest("Invalid user request!!!");
             }
 
-            var isLoginValid = loginService.CheckLogin(user);
+            var isLoginValid = loginService.CheckLogin(login);
 
             if (isLoginValid)
             {

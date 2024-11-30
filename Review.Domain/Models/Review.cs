@@ -1,4 +1,4 @@
-﻿namespace Review.Domain.Models
+﻿namespace Reviews.Domain.Models
 {
     /// <summary>
     /// Отзыв

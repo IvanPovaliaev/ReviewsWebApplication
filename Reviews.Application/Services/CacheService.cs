@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Review.Domain.Interfaces;
+using Reviews.Domain.Interfaces;
 using StackExchange.Redis;
 
-namespace Review.Domain.Services
+namespace Reviews.Application.Services
 {
     public class CacheService : ICacheService
     {

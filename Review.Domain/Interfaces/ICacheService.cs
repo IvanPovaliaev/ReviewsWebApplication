@@ -1,4 +1,4 @@
-﻿namespace Review.Domain.Interfaces
+﻿namespace Reviews.Domain.Interfaces
 {
     public interface ICacheService
     {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Review.Domain.Interfaces;
+using Reviews.Domain.Interfaces;
+using Reviews.Domain.Models;
 
 namespace ReviewsWebApplication.Controllers
 {
@@ -24,7 +25,7 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetFeedbacksByProductId")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetAllReviewsAsync(int id)
+        public async Task<ActionResult<List<Review>>> GetAllReviewsAsync(int id)
         {
             try
             {
@@ -43,7 +44,7 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> GetReviewAsync(int feedbackId, int productId)
+        public async Task<ActionResult<List<Review>>> GetReviewAsync(int feedbackId, int productId)
         {
             try
             {
@@ -63,7 +64,7 @@ namespace ReviewsWebApplication.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpDelete("DeleteReview")]
-        public async Task<ActionResult<List<Review.Domain.Models.Review>>> DeleteReviewAsync(int id)
+        public async Task<ActionResult<List<Review>>> DeleteReviewAsync(int id)
         {
             try
             {
