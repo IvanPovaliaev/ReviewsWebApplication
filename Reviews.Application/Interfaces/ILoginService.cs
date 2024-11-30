@@ -5,10 +5,10 @@ namespace Reviews.Application.Interfaces
     public interface ILoginService
     {
         /// <summary>
-        /// Проверить логин и пароль
+        /// Check login 
         /// </summary>
-        /// <param name="login">Логин</param>
-        /// <returns>True, если логин валидный; иначе - false</returns>
+        /// <param name="login">LoginDTO model</param>
+        /// <returns>True, if the login model is valid; otherwise false</returns>
         bool CheckLogin(LoginDTO login);
     }
 }

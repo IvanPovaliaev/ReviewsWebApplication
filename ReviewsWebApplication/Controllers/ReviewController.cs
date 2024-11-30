@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Reviews.Domain.Interfaces;
-using Reviews.Domain.Models;
+using Reviews.Application.Interfaces;
 
 namespace ReviewsWebApplication.Controllers
 {
@@ -21,11 +20,12 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Получение всех отзывов по продукту
+        /// Get all review by product id
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Collection of ReviewDTO's for target product</returns>
+        /// <param name="productId">Product id</param>
         [HttpGet("GetAllByProductId")]
-        public async Task<ActionResult<List<Review>>> GetAllAsync(int productId)
+        public async Task<IActionResult> GetAllAsync(int productId)
         {
             try
             {
@@ -40,11 +40,12 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Получение отзыва по Id
+        /// Get review by id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Review id</param>
+        /// <returns>Related ReviewDTO model</returns>
         [HttpGet]
-        public async Task<ActionResult<List<Review>>> GetReviewAsync(int id)
+        public async Task<IActionResult> GetReviewAsync(int id)
         {
             try
             {
@@ -59,12 +60,13 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Удаление отзыва по id
+        /// Delete review by id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Review id</param>
+        /// <returns>True if review deleted successfully; otherwise return false</returns>
         [Authorize]
         [HttpDelete]
-        public async Task<ActionResult<List<Review>>> DeleteReviewAsync(int id)
+        public async Task<IActionResult> DeleteReviewAsync(int id)
         {
             try
             {

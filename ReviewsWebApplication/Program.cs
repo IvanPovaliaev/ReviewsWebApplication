@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Reviews.Application.Helpers;
 using Reviews.Application.Interfaces;
 using Reviews.Application.Services;
 using Reviews.Domain;
@@ -49,6 +50,7 @@ internal class Program
         var connectionString = builder.Configuration.GetConnectionString("Review_Database");
         builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
+        builder.Services.AddAutoMapper(typeof(MappingProfile));
         builder.Services.AddScoped<IReviewService, ReviewService>();
         builder.Services.AddScoped<ICacheService, CacheService>();
         builder.Services.AddScoped<ILoginService, LoginService>();

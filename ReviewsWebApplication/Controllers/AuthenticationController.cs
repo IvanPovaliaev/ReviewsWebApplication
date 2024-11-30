@@ -20,6 +20,12 @@ namespace ReviewsWebApplication.Controllers
             _loginService = loginService;
         }
 
+        /// <summary>
+        /// Login to system
+        /// </summary>
+        /// <returns>Ok status code with token; Unauthorized if input data is incorrect</returns>
+        /// <param name="login">LoginDTO model</param>
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDTO login)
         {
