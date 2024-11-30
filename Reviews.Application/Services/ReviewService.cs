@@ -7,35 +7,34 @@ namespace Reviews.Application.Services
 {
     public class ReviewService : IReviewService
     {
-        private readonly DataBaseContext databaseContext;
+        private readonly DataBaseContext _databaseContext;
 
         public ReviewService(DataBaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
-        public async Task<List<Review>> GetFeedbacks(int id)
+        public async Task<List<Review>> GetReviewsByProductId(int id)
         {
-            return await databaseContext.Reviews
-                                        .Where(r => r.Status != FeedbackStatus.Deleted)
-                                        .ToListAsync();
+            return await _databaseContext.Reviews
+                                         .Where(r => r.Status != ReviewStatus.Deleted && r.ProductId == id)
+                                         .Include(r => r.Rating)
+                                         .ToListAsync();
         }
 
-        public async Task<IEnumerable<Review?>> GetReviewAsync(int id, int productId)
+        public async Task<Review?> GetReviewAsync(int id)
         {
-            return await databaseContext.Reviews.Where(x => x.Id == id)
-                                                  .ToListAsync();
+            return await _databaseContext.Reviews.FindAsync(id);
         }
 
-        public async Task<bool> TryToDeleteReviewAsync(int id)
+        public async Task<bool> TryDeleteReviewAsync(int id)
         {
             try
             {
-                var Review = await databaseContext.Reviews.Where(x => x.Id == id)
-                                                            .FirstOrDefaultAsync();
+                var review = await _databaseContext.Reviews.FindAsync(id);
+                review.Status = ReviewStatus.Deleted;
 
-                databaseContext.Reviews.Remove(Review!);
-                await databaseContext.SaveChangesAsync();
+                await _databaseContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception)

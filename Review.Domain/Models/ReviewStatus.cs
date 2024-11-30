@@ -1,6 +1,6 @@
 ﻿namespace Reviews.Domain.Models
 {
-    public enum FeedbackStatus
+    public enum ReviewStatus
     {
         None,
         Actual,

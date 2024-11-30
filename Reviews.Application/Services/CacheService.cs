@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Reviews.Application.Helpers;
 using Reviews.Domain.Interfaces;
 using StackExchange.Redis;
 
@@ -7,6 +8,7 @@ namespace Reviews.Application.Services
     public class CacheService : ICacheService
     {
         private readonly IDatabase _db;
+
         public CacheService()
         {
             _db = ConnectionHelper.Connection.GetDatabase();
@@ -33,9 +35,9 @@ namespace Reviews.Application.Services
 
         public object RemoveData(string key)
         {
-            var _isKeyExist = _db.KeyExists(key);
+            var isKeyExist = _db.KeyExists(key);
 
-            if (_isKeyExist)
+            if (isKeyExist)
             {
                 return _db.KeyDelete(key);
             }

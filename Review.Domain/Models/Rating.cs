@@ -23,12 +23,13 @@
         /// <summary>
         /// отзывы
         /// </summary>
-        public List<Review> Feedbacks { get; set; }
+        public List<Review> Reviews { get; set; }
 
         public double Grade { get; set; }
+
         public Rating()
         {
-            Feedbacks = new List<Review>();
+            Reviews = new List<Review>();
         }
     }
 }

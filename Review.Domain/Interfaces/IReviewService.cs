@@ -9,21 +9,20 @@ namespace Reviews.Domain.Interfaces
         /// </summary>
         /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<List<Review>> GetFeedbacks(int productId);
+        Task<List<Review>> GetReviewsByProductId(int productId);
 
         /// <summary>
         /// Получение всех отзывов по продукту
         /// </summary>
         /// <param name="id">Id отзыва</param>
-        /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<IEnumerable<Review?>> GetReviewAsync(int id, int productId);
+        Task<Review?> GetReviewAsync(int id);
 
         /// <summary>
         /// Удаление отзыва
         /// </summary>
         /// <param name="id">Id отзыва</param>
         /// <returns></returns>
-        Task<bool> TryToDeleteReviewAsync(int id);
+        Task<bool> TryDeleteReviewAsync(int id);
     }
 }

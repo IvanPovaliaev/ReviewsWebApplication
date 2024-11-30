@@ -2,11 +2,10 @@
 using Microsoft.IdentityModel.Tokens;
 using Reviews.Application.Interfaces;
 using Reviews.Application.Models;
-using Reviews.Domain.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ConfigurationManager = Reviews.Application.Services.ConfigurationManager;
+using ConfigurationManager = Reviews.Application.Helpers.ConfigurationManager;
 
 namespace ReviewsWebApplication.Controllers
 {
@@ -14,11 +13,11 @@ namespace ReviewsWebApplication.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ILoginService loginService;
+        private readonly ILoginService _loginService;
 
         public AuthenticationController(ILoginService loginService)
         {
-            this.loginService = loginService;
+            _loginService = loginService;
         }
 
         [HttpPost("login")]
@@ -29,7 +28,7 @@ namespace ReviewsWebApplication.Controllers
                 return BadRequest("Invalid user request!!!");
             }
 
-            var isLoginValid = loginService.CheckLogin(login);
+            var isLoginValid = _loginService.CheckLogin(login);
 
             if (isLoginValid)
             {

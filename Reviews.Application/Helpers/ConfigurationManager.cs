@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Reviews.Application.Services
+namespace Reviews.Application.Helpers
 {
     public static class ConfigurationManager
     {
-        public static IConfiguration AppSetting
-        {
-            get;
-        }
+        public static IConfiguration AppSetting { get; }
 
         static ConfigurationManager()
         {

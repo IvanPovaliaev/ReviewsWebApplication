@@ -8,17 +8,17 @@
         /// <summary>
         /// Id отзыва
         /// </summary>
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         /// <summary>
         /// Id продукта
         /// </summary>
-        public int ProductId { get; set; }
+        public int ProductId { get; init; }
 
         /// <summary>
         /// Id пользователя, оставившего отзыв
         /// </summary>
-        public int UserId { get; set; }
+        public int UserId { get; init; }
 
         /// <summary>
         /// Текст отзыва
@@ -35,10 +35,10 @@
         /// </summary>
         public DateTime CreationDate { get; set; }
 
-        public int RatingId { get; set; }
+        public int RatingId { get; init; }
 
-        public Rating Rating { get; set; }
+        public Rating Rating { get; init; }
 
-        public FeedbackStatus Status { get; set; }
+        public ReviewStatus Status { get; set; }
     }
 }

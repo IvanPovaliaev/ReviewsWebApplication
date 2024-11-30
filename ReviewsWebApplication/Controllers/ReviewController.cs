@@ -5,31 +5,31 @@ using Reviews.Domain.Models;
 
 namespace ReviewsWebApplication.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
 
     public class ReviewController : ControllerBase
     {
 
         private readonly ILogger<ReviewController> _logger;
-        private readonly IReviewService reviewService;
+        private readonly IReviewService _reviewService;
 
         public ReviewController(ILogger<ReviewController> logger, IReviewService reviewService)
         {
             _logger = logger;
-            this.reviewService = reviewService;
+            _reviewService = reviewService;
         }
 
         /// <summary>
         /// Получение всех отзывов по продукту
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetFeedbacksByProductId")]
-        public async Task<ActionResult<List<Review>>> GetAllReviewsAsync(int id)
+        [HttpGet("GetAllByProductId")]
+        public async Task<ActionResult<List<Review>>> GetAllAsync(int productId)
         {
             try
             {
-                var result = await reviewService.GetFeedbacks(id);
+                var result = await _reviewService.GetReviewsByProductId(productId);
                 return Ok(result);
             }
             catch (Exception e)
@@ -40,15 +40,15 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Получение отзыва
+        /// Получение отзыва по Id
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Review>>> GetReviewAsync(int feedbackId, int productId)
+        [HttpGet]
+        public async Task<ActionResult<List<Review>>> GetReviewAsync(int id)
         {
             try
             {
-                var result = await reviewService.GetReviewAsync(feedbackId, productId);
+                var result = await _reviewService.GetReviewAsync(id);
                 return Ok(result);
             }
             catch (Exception e)
@@ -63,18 +63,14 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete("DeleteReview")]
+        [HttpDelete]
         public async Task<ActionResult<List<Review>>> DeleteReviewAsync(int id)
         {
             try
             {
-                var result = await reviewService.TryToDeleteReviewAsync(id);
-                if (result)
-                {
-                    return Ok();
-                }
+                var result = await _reviewService.TryDeleteReviewAsync(id);
 
-                return BadRequest(result);
+                return result ? Ok() : BadRequest(result);
             }
             catch (Exception e)
             {

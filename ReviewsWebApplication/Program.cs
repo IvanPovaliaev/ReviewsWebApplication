@@ -7,7 +7,7 @@ using Reviews.Application.Services;
 using Reviews.Domain;
 using Reviews.Domain.Interfaces;
 using System.Text;
-using ConfigurationManager = Reviews.Application.Services.ConfigurationManager;
+using ConfigurationManager = Reviews.Application.Helpers.ConfigurationManager;
 
 internal class Program
 {

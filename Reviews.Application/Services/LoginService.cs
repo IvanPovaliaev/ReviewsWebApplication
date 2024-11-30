@@ -6,26 +6,19 @@ namespace Reviews.Application.Services
 {
     public class LoginService : ILoginService
     {
-        private readonly DataBaseContext databaseContext;
+        private readonly DataBaseContext _databaseContext;
 
         public LoginService(DataBaseContext databaseContext)
         {
-            this.databaseContext = databaseContext;
+            _databaseContext = databaseContext;
         }
 
         public bool CheckLogin(LoginDTO login)
         {
-            var containsLogin = databaseContext.Logins;
+            var loginDB = _databaseContext.Logins
+                                          .FirstOrDefault(l => l.UserName == login.UserName);
 
-            foreach (var item in containsLogin)
-            {
-                if (item.UserName.Equals(login.UserName) && item.Password.Equals(login.Password))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return loginDB?.Password!.Equals(login.Password) ?? false;
         }
     }
 }
