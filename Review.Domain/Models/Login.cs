@@ -2,8 +2,8 @@
 {
     public class Login
     {
-        public int Id { get; set; }
-        public string? UserName { get; set; }
-        public string? Password { get; set; }
+        public int Id { get; init; }
+        public string? UserName { get; init; }
+        public string? Password { get; init; }
     }
 }

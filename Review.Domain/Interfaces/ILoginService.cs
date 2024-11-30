@@ -1,6 +1,6 @@
 ﻿using Review.Domain.Models;
 
-namespace Review.Domain.Services
+namespace Review.Domain.Interfaces
 {
     public interface ILoginService
     {

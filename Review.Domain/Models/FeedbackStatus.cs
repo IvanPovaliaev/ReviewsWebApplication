@@ -1,6 +1,9 @@
-﻿public enum FeedbackStatus
+﻿namespace Review.Domain.Models
 {
-    None = 0,
-    Actual = 1,
-    Deleted = 2
+    public enum FeedbackStatus
+    {
+        None,
+        Actual,
+        Deleted
+    }
 }

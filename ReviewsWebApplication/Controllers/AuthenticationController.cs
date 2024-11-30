@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Review.Domain.Interfaces;
 using Review.Domain.Models;
-using Review.Domain.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,9 +13,9 @@ namespace ReviewsWebApplication.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly LoginService loginService;
+        private readonly ILoginService loginService;
 
-        public AuthenticationController(LoginService loginService)
+        public AuthenticationController(ILoginService loginService)
         {
             this.loginService = loginService;
         }

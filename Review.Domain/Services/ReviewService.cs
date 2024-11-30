@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Review.Domain.Models;
+using Review.Domain.Interfaces;
 
 namespace Review.Domain.Services
 {
@@ -11,12 +11,12 @@ namespace Review.Domain.Services
         {
             this.databaseContext = databaseContext;
         }
-        public async Task<List<Feedback>> GetFeedbacks(int id)
+        public async Task<List<Models.Review>> GetFeedbacks(int id)
         {
             return await databaseContext.Feedbacks.ToListAsync();
         }
 
-        public async Task<IEnumerable<Feedback?>> GetReviewAsync(int id, int productId)
+        public async Task<IEnumerable<Models.Review?>> GetReviewAsync(int id, int productId)
         {
             return await databaseContext.Feedbacks.Where(x => x.Id == id)
                                                   .ToListAsync();

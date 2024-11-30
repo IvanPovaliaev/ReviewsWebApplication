@@ -7,7 +7,7 @@ namespace Review.Domain
     public class DataBaseContext : DbContext
     {
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Models.Review> Feedbacks { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
@@ -16,7 +16,7 @@ namespace Review.Domain
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Feedback>()
+            modelBuilder.Entity<Models.Review>()
                         .HasOne(p => p.Rating)
                         .WithMany(t => t.Feedbacks)
                         .HasForeignKey(p => p.RatingId)
@@ -25,7 +25,7 @@ namespace Review.Domain
             var Feedbacks = Initialization.SetFeedbacks();
             var Rating = Initialization.SetRatings();
 
-            modelBuilder.Entity<Feedback>()
+            modelBuilder.Entity<Models.Review>()
                         .HasData(Feedbacks);
 
             modelBuilder.Entity<Rating>()

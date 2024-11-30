@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Review.Domain.Interfaces;
 using StackExchange.Redis;
 
 namespace Review.Domain.Services

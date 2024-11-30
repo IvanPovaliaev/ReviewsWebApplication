@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Review.Domain;
+using Review.Domain.Interfaces;
 using Review.Domain.Services;
 using System.Text;
 using ConfigurationManager = Review.Domain.Services.ConfigurationManager;
@@ -14,7 +15,6 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
@@ -47,9 +47,11 @@ internal class Program
         });
         var connectionString = builder.Configuration.GetConnectionString("Review_Database");
         builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString));
+
         builder.Services.AddScoped<IReviewService, ReviewService>();
         builder.Services.AddScoped<ICacheService, CacheService>();
-        builder.Services.AddScoped<LoginService>();
+        builder.Services.AddScoped<ILoginService, LoginService>();
+
         builder.Services.AddAuthentication(opt =>
         {
             opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,6 +79,7 @@ internal class Program
                 options.SwaggerEndpoint("/swagger/V1/swagger.json", "Secret_WebAPI");
             });
         }
+
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();

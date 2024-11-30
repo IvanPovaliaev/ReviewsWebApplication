@@ -18,17 +18,17 @@
         /// <summary>
         /// Дата создания
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
         /// <summary>
         /// отзывы
         /// </summary>
-        public List<Feedback> Feedbacks { get; set; }
+        public List<Review> Feedbacks { get; set; }
 
         public double Grade { get; set; }
         public Rating()
         {
-            Feedbacks = new List<Feedback>();
+            Feedbacks = new List<Review>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Review.Domain.Models;
+﻿using Review.Domain.Interfaces;
+using Review.Domain.Models;
 
 namespace Review.Domain.Services
 {

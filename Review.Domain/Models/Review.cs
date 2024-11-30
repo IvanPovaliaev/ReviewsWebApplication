@@ -3,7 +3,7 @@
     /// <summary>
     /// Отзыв
     /// </summary>
-    public class Feedback
+    public class Review
     {
         /// <summary>
         /// Id отзыва
@@ -33,12 +33,12 @@
         /// <summary>
         /// Дата создания
         /// </summary>
-        public DateTime CreateDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public int RatingId { get; set; }
 
         public Rating Rating { get; set; }
 
-        public FeedbackStatus status { get; set; }
+        public FeedbackStatus Status { get; set; }
     }
 }
