@@ -8,9 +8,14 @@ namespace Review.Domain.Services
         {
             get;
         }
+
         static ConfigurationManager()
         {
-            AppSetting = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
+            var directory = Directory.GetCurrentDirectory();
+
+            AppSetting = new ConfigurationBuilder().SetBasePath(directory)
+                                                   .AddJsonFile("appsettings.json")
+                                                   .Build();
         }
     }
 }

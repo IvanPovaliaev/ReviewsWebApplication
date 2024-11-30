@@ -8,7 +8,7 @@ namespace Review.Domain.Services
         /// Проверить логин и пароль
         /// </summary>
         /// <param name="login">Логин</param>
-        /// <returns></returns>
+        /// <returns>True, если логин валидный; иначе - false</returns>
         bool CheckLogin(Login login);
     }
 }

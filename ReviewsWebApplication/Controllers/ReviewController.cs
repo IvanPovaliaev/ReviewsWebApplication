@@ -29,7 +29,7 @@ namespace ReviewsWebApplication.Controllers
         {
             try
             {
-                var result = await reviewService.GetFeedbacksByProductIdAsync(id);
+                var result = await reviewService.GetFeedbacks(id);
                 return Ok(result);
             }
             catch (Exception e)
@@ -69,8 +69,11 @@ namespace ReviewsWebApplication.Controllers
             try
             {
                 var result = await reviewService.TryToDeleteReviewAsync(id);
-                if(result)
+                if (result)
+                {
                     return Ok();
+                }
+
                 return BadRequest(result);
             }
             catch (Exception e)

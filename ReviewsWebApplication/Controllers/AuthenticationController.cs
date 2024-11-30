@@ -13,14 +13,13 @@ namespace ReviewsWebApplication.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly ILogger<ReviewController> _logger;
         private readonly LoginService loginService;
 
-        public AuthenticationController(ILogger<ReviewController> logger, LoginService loginService)
+        public AuthenticationController(LoginService loginService)
         {
-            _logger = logger;
             this.loginService = loginService;
         }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] Login user)
         {
@@ -29,18 +28,26 @@ namespace ReviewsWebApplication.Controllers
                 return BadRequest("Invalid user request!!!");
             }
 
-            var res = loginService.CheckLogin(user);
-            if (res)
+            var isLoginValid = loginService.CheckLogin(user);
+
+            if (isLoginValid)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationManager.AppSetting["JWT:Secret"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokeOptions = new JwtSecurityToken(issuer: ConfigurationManager.AppSetting["JWT:ValidIssuer"], audience: ConfigurationManager.AppSetting["JWT:ValidAudience"], claims: new List<Claim>(), expires: DateTime.Now.AddMinutes(6), signingCredentials: signinCredentials);
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: ConfigurationManager.AppSetting["JWT:ValidIssuer"],
+                    audience: ConfigurationManager.AppSetting["JWT:ValidAudience"],
+                    claims: new List<Claim>(),
+                    expires: DateTime.UtcNow.AddMinutes(6),
+                    signingCredentials: signinCredentials);
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
                 return Ok(new JWTTokenResponse
                 {
                     Token = tokenString
                 });
             }
+
             return Unauthorized();
         }
     }

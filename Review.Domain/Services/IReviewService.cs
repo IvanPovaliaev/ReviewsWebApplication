@@ -7,9 +7,9 @@ namespace Review.Domain.Services
         /// <summary>
         /// Получение все отзывов по продукту
         /// </summary>
-        /// <param name="id">Id продукта</param>
+        /// <param name="productId">Id продукта</param>
         /// <returns></returns>
-        Task<List<Feedback>> GetFeedbacksByProductIdAsync(int id);
+        Task<List<Feedback>> GetFeedbacks(int productId);
 
         /// <summary>
         /// Получение все отзывов по продукту
