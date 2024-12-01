@@ -24,7 +24,9 @@ namespace Reviews.Application.Services
                                          .Where(r => r.Status != ReviewStatus.Deleted && r.ProductId == id)
                                          .Include(r => r.Rating)
                                          .ToListAsync();
-            return reviews.Select(_mapper.Map<ReviewDTO>).ToList();
+
+            return reviews.Select(_mapper.Map<ReviewDTO>)
+                          .ToList();
         }
 
         public async Task<ReviewDTO?> GetReviewAsync(int id)
