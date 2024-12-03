@@ -1,8 +1,7 @@
-﻿namespace Reviews.Domain.Models
+﻿namespace Reviews.Application.Models
 {
-    public class Login
+    public class LoginDTO
     {
-        public int Id { get; init; }
         public string? UserName { get; init; }
         public string? Password { get; init; }
     }

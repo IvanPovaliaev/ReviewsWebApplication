@@ -1,82 +1,76 @@
-﻿using Review.Domain.Models;
+﻿using Reviews.Domain.Models;
 
-namespace Review.Domain.Helper
+namespace Reviews.Domain.Helper
 {
-    public static class Initialization
-    {
-        private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        public static Feedback[] SetFeedbacks()
-        {
-            var count = 100;
-            var random = new Random();
-            List<Feedback> result = new List<Feedback>(count);
-            for (int i = 1; i <= count; i++)
-            {
-                Feedback f = CreateFeedback(random, i);
-                result.Add(f);
-            }
-            return result.ToArray();
-        }
+	public class Initialization
+	{
+		private const int ProductCount = 10;
+		private const int MaxReviewPerRating = 10;
+		private readonly Random _random = new();
+		private int _reviewIndex = 1;
+		private readonly string LoremIpsum = InitializationResources.LoremIpsum;
 
-        public static Feedback CreateFeedback(Random random, int i)
-        {
-            return new Feedback()
-            {
-                Id = i,
-                CreateDate = DateTime.Now.AddDays(random.Next(-100, 0)),
-                Grade = random.Next(0, 6),
-                ProductId = random.Next(1, 10),
-                Text = LoremIpsum.Substring(0, random.Next(20, 100)),
-                UserId = random.Next(1, 10), 
-                RatingId = random.Next(1, 10),
-                status = (Status)random.Next(0, 2)
-            };
-        }
+		public IEnumerable<Review> SetReviews()
+		{
+			for (int i = 1; i <= ProductCount; i++)
+			{
+				var reviewsCount = _random.Next(1, MaxReviewPerRating + 1);
 
-        public static Rating[] SetRatings()
-        {
-            var count = 100;
-            var random = new Random();
-            List<Rating> result = new List<Rating>(count);
-            for (int i = 1; i <= count; i++)
-            {
-                Rating fff = CreateRating(random, i);
-                result.Add(fff);
-            }
-            return result.ToArray();
-        }
+				for (int j = 1; j <= reviewsCount; j++)
+				{
+					yield return CreateReview(i);
+				}
+			}
+		}
 
-        public static Rating CreateRating(Random random, int i)
-        {
-            Feedback f = CreateFeedback(random, i);
-            var couuntF = random.Next(1, 10);
-            var feedbacs = new List<Feedback>(couuntF);
-            for (int k = 1; k <= couuntF; k++)
-            {
-                feedbacs.Add(CreateFeedback(random, k));
-            }
-            var feedbacsAverage = feedbacs.Select(x => x.Grade).Average();
-            var fff = new Rating()
-            {
-                Id = i,
-                CreateDate = DateTime.Now.AddDays(random.Next(-100, 0)),
-                ProductId = random.Next(1, 10),
-                Grade = Math.Round(feedbacsAverage, 2)
-            };
-            return fff;
-        }
+		public Review CreateReview(int productId)
+		{
+			return new Review()
+			{
+				Id = _reviewIndex++,
+				CreationDate = DateTime.UtcNow.AddDays(_random.Next(-100, 0)),
+				Grade = _random.Next(0, 6),
+				ProductId = productId,
+				Text = LoremIpsum.Substring(0, _random.Next(20, 100)),
+				UserId = _random.Next(1, 10),
+				Status = (ReviewStatus)_random.Next(0, 3),
+				RatingId = productId
+			};
+		}
 
-        public static Login[] SetLogins()
-        {
-            var results = new List<Login>();
-            var login1 = new Login()
-            {  
-                Id = 1,
-                UserName = "admin", 
-                Password = "admin" 
-            };
-            results.Add(login1);
-            return results.ToArray();
-        }
-    }
+		public IEnumerable<Rating> SetRatings(IEnumerable<Review> reviews)
+		{
+			var reviewsPerRating = reviews.ToLookup(r => r.RatingId);
+
+			foreach (var ratingReview in reviewsPerRating)
+			{
+				var rating = new Rating()
+				{
+					Id = ratingReview.Key,
+					CreationDate = DateTime.UtcNow.AddDays(_random.Next(-100, 0)),
+					ProductId = ratingReview.Key,
+					Reviews = ratingReview.ToList()
+				};
+
+				rating.UpdateGrade();
+				rating.Reviews = new List<Review>();
+
+				yield return rating;
+			}
+		}
+
+		public static List<Login> SetLogins()
+		{
+			var results = new List<Login>();
+			var firstLogin = new Login()
+			{
+				Id = 1,
+				UserName = "admin",
+				Password = "admin"
+			};
+
+			results.Add(firstLogin);
+			return results;
+		}
+	}
 }

@@ -1,35 +1,35 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Review.Domain.Models;
-using Review.Domain.Services;
+using Reviews.Application.Interfaces;
 
 namespace ReviewsWebApplication.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
 
     public class ReviewController : ControllerBase
     {
 
         private readonly ILogger<ReviewController> _logger;
-        private readonly IReviewService reviewService;
+        private readonly IReviewService _reviewService;
 
         public ReviewController(ILogger<ReviewController> logger, IReviewService reviewService)
         {
             _logger = logger;
-            this.reviewService = reviewService;
+            _reviewService = reviewService;
         }
 
         /// <summary>
-        /// Получение всех отзывов по продукту
+        /// Get all review by product id
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetFeedbacksByProductId")]
-        public async Task<ActionResult<List<Feedback>>> GetAllReviewsAsync(int id)
+        /// <returns>Collection of ReviewDTO's for target product</returns>
+        /// <param name="productId">Product id</param>
+        [HttpGet("GetAllByProductId")]
+        public async Task<IActionResult> GetAllAsync(int productId)
         {
             try
             {
-                var result = await reviewService.GetFeedbacksByProductIdAsync(id);
+                var result = await _reviewService.GetReviewsByProductIdAsync(productId);
                 return Ok(result);
             }
             catch (Exception e)
@@ -40,15 +40,16 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Получение отзыва
+        /// Get review by id
         /// </summary>
-        /// <returns></returns>
-        [HttpGet("GetReview")]
-        public async Task<ActionResult<List<Feedback>>> GetReviewAsync(int feedbackId, int productId)
+        /// <param name="id">Review id</param>
+        /// <returns>Related ReviewDTO model</returns>
+        [HttpGet]
+        public async Task<IActionResult> GetReviewAsync(int id)
         {
             try
             {
-                var result = await reviewService.GetReviewAsync(feedbackId, productId);
+                var result = await _reviewService.GetReviewAsync(id);
                 return Ok(result);
             }
             catch (Exception e)
@@ -59,19 +60,19 @@ namespace ReviewsWebApplication.Controllers
         }
 
         /// <summary>
-        /// Удаление отзыва по id
+        /// Delete review by id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Review id</param>
+        /// <returns>True if review deleted successfully; otherwise return false</returns>
         [Authorize]
-        [HttpDelete("DeleteReview")]
-        public async Task<ActionResult<List<Feedback>>> DeleteReviewAsync(int id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteReviewAsync(int id)
         {
             try
             {
-                var result = await reviewService.TryToDeleteReviewAsync(id);
-                if(result)
-                    return Ok();
-                return BadRequest(result);
+                var result = await _reviewService.TryDeleteReviewAsync(id);
+
+                return result ? Ok() : BadRequest(result);
             }
             catch (Exception e)
             {

@@ -1,38 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Review.Domain.Helper;
-using Review.Domain.Models;
-using static System.Net.Mime.MediaTypeNames;
+using Reviews.Domain.Helper;
+using Reviews.Domain.Models;
 
-namespace Review.Domain
+namespace Reviews.Domain
 {
-    public class DataBaseContext: DbContext
+    public class DataBaseContext : DbContext
     {
-
         public DbSet<Rating> Ratings { get; set; }
-        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Review> Reviews { get; set; }
         public DbSet<Login> Logins { get; set; }
-        public DataBaseContext(DbContextOptions<DataBaseContext> options): base(options)
+
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Feedback>()
-                .HasOne(p => p.Rating)
-                .WithMany(t => t.Feedbacks)
-                .HasForeignKey(p => p.RatingId)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Review>()
+                        .HasOne(p => p.Rating)
+                        .WithMany(t => t.Reviews)
+                        .HasForeignKey(p => p.RatingId)
+                        .OnDelete(DeleteBehavior.Cascade);
 
-            var Feedbacks = Initialization.SetFeedbacks();
-            var Rating = Initialization.SetRatings();
+            var initialization = new Initialization();
 
-            modelBuilder.Entity<Feedback>().HasData(Feedbacks);
-            modelBuilder.Entity<Rating>().HasData(Rating);
+            var reviews = initialization.SetReviews()
+                                        .ToList();
 
-            Login[] login = Initialization.SetLogins();
-            modelBuilder.Entity<Login>().HasData(login);
+            var ratings = initialization.SetRatings(reviews);
+
+            modelBuilder.Entity<Review>()
+                        .HasData(reviews);
+
+            modelBuilder.Entity<Rating>()
+                        .HasData(ratings);
+
+            var login = Initialization.SetLogins();
+            modelBuilder.Entity<Login>()
+                        .HasData(login);
         }
     }
 }

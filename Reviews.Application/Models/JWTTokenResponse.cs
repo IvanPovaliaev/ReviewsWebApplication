@@ -1,4 +1,4 @@
-﻿namespace Review.Domain.Services
+﻿namespace Reviews.Application.Models
 {
     public class JWTTokenResponse
     {
