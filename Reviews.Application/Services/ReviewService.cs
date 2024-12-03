@@ -20,7 +20,7 @@ namespace Reviews.Application.Services
 			_ratingService = ratingService;
 		}
 
-		public async Task<List<ReviewDTO>> GetReviewsByProductId(int id)
+		public async Task<List<ReviewDTO>> GetReviewsByProductIdAsync(int id)
 		{
 			var reviews = await _databaseContext.Reviews
 												.Where(r => r.Status != ReviewStatus.Deleted && r.ProductId == id)
