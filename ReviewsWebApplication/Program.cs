@@ -37,16 +37,16 @@ internal class Program
 				Type = SecuritySchemeType.Http
 			});
 			options.AddSecurityRequirement(new OpenApiSecurityRequirement {
-		{
-			new OpenApiSecurityScheme {
-				Reference = new OpenApiReference {
-					Id = "Bearer",
-						Type = ReferenceType.SecurityScheme
+				{
+					new OpenApiSecurityScheme {
+						Reference = new OpenApiReference {
+							Id = "Bearer",
+								Type = ReferenceType.SecurityScheme
+						}
+					},
+					new List<string>()
 				}
-			},
-			new List<string>()
-		}
-	});
+			});
 		});
 		var connectionString = builder.Configuration.GetConnectionString("Review_Database");
 		builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString), ServiceLifetime.Scoped);

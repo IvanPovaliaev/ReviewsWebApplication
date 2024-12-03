@@ -9,7 +9,7 @@ namespace Reviews.Application.Interfaces
 		/// </summary>
 		/// <param name="productId">Product id</param>
 		/// <returns>Collection of ReviewDTO's for target product</returns>
-		Task<List<ReviewDTO>> GetReviewsByProductId(int productId);
+		Task<List<ReviewDTO>> GetReviewsByProductIdAsync(int productId);
 
 		/// <summary>
 		/// Get review by id
