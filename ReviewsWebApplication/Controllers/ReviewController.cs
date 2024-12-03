@@ -22,25 +22,25 @@ namespace ReviewsWebApplication.Controllers
 			_addReviewValidator = addReviewValidator;
 		}
 
-		/// <summary>
-		/// Get all review by product id
-		/// </summary>
-		/// <returns>Collection of ReviewDTO's for target product</returns>
-		/// <param name="productId">Product id</param>
-		[HttpGet("GetAllByProductId")]
-		public async Task<IActionResult> GetAllAsync(int productId)
-		{
-			try
-			{
-				var result = await _reviewService.GetReviewsByProductId(productId);
-				return Ok(result);
-			}
-			catch (Exception e)
-			{
-				_logger.LogError(e.Message, e);
-				return BadRequest(new { Error = e.Message });
-			}
-		}
+        /// <summary>
+        /// Get all review by product id
+        /// </summary>
+        /// <returns>Collection of ReviewDTO's for target product</returns>
+        /// <param name="productId">Product id</param>
+        [HttpGet("GetAllByProductId")]
+        public async Task<IActionResult> GetAllAsync(int productId)
+        {
+            try
+            {
+                var result = await _reviewService.GetReviewsByProductIdAsync(productId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message, e);
+                return BadRequest(new { Error = e.Message });
+            }
+        }
 
 		/// <summary>
 		/// Get review by id
