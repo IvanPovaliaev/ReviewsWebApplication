@@ -19,6 +19,13 @@ namespace Reviews.Application.Interfaces
 		Task<ReviewDTO?> GetReviewAsync(int id);
 
 		/// <summary>
+		/// Add new Review
+		/// </summary>
+		/// <param name="newReview">AddReviewDTO</param>
+		/// <returns>True if review added successfully; otherwise return false</returns>
+		Task<bool> AddReviewAsync(AddReviewDTO newReview);
+
+		/// <summary>
 		/// Delete review by id
 		/// </summary>
 		/// <param name="id">Review id</param>

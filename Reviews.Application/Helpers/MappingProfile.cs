@@ -4,11 +4,12 @@ using Reviews.Domain.Models;
 
 namespace Reviews.Application.Helpers
 {
-    public class MappingProfile : Profile
-    {
-        public MappingProfile()
-        {
-            CreateMap<Review, ReviewDTO>().ReverseMap();
-        }
-    }
+	public class MappingProfile : Profile
+	{
+		public MappingProfile()
+		{
+			CreateMap<Review, ReviewDTO>().ReverseMap();
+			CreateMap<Review, AddReviewDTO>().ReverseMap();
+		}
+	}
 }
