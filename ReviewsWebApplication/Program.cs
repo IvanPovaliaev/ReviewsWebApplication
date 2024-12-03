@@ -9,6 +9,7 @@ using Reviews.Application.Services;
 using Reviews.Application.Validations;
 using Reviews.Domain;
 using System.Text;
+using System.Text.Json.Serialization;
 using ConfigurationManager = Reviews.Application.Helpers.ConfigurationManager;
 
 internal class Program
@@ -17,7 +18,12 @@ internal class Program
 	{
 		var builder = WebApplication.CreateBuilder(args);
 
-		builder.Services.AddControllers();
+		builder.Services.AddControllers()
+						.AddJsonOptions(options =>
+						{
+							options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+						});
+
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen(options =>
 		{
@@ -25,7 +31,7 @@ internal class Program
 			{
 				Version = "V1",
 				Title = "WebAPI",
-				Description = "Secret_WebAPI"
+				Description = "Reviews_WebAPI"
 			});
 			options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 			{
@@ -37,16 +43,17 @@ internal class Program
 				Type = SecuritySchemeType.Http
 			});
 			options.AddSecurityRequirement(new OpenApiSecurityRequirement {
-				{
-					new OpenApiSecurityScheme {
-						Reference = new OpenApiReference {
-							Id = "Bearer",
-								Type = ReferenceType.SecurityScheme
-						}
-					},
-					new List<string>()
-				}
-			});
+			{
+				new OpenApiSecurityScheme {
+					Reference = new OpenApiReference {
+						Id = "Bearer",
+							Type = ReferenceType.SecurityScheme
+					}
+				},
+				new List<string>()
+			}});
+
+			options.UseInlineDefinitionsForEnums();
 		});
 		var connectionString = builder.Configuration.GetConnectionString("Review_Database");
 		builder.Services.AddDbContext<DataBaseContext>(x => x.UseSqlServer(connectionString), ServiceLifetime.Scoped);
@@ -81,7 +88,7 @@ internal class Program
 			app.UseSwagger();
 			app.UseSwaggerUI(options =>
 			{
-				options.SwaggerEndpoint("/swagger/V1/swagger.json", "Secret_WebAPI");
+				options.SwaggerEndpoint("/swagger/V1/swagger.json", "Reviews_WebAPI");
 			});
 		}
 
