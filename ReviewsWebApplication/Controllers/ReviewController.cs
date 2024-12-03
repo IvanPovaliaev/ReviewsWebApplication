@@ -29,7 +29,7 @@ namespace ReviewsWebApplication.Controllers
         {
             try
             {
-                var result = await _reviewService.GetReviewsByProductId(productId);
+                var result = await _reviewService.GetReviewsByProductIdAsync(productId);
                 return Ok(result);
             }
             catch (Exception e)
