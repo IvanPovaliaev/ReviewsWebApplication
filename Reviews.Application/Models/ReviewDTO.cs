@@ -6,9 +6,9 @@ namespace Reviews.Application.Models
     {
         public int Id { get; init; }
 
-        public int ProductId { get; init; }
+        public Guid ProductId { get; init; }
 
-        public int UserId { get; init; }
+        public string UserId { get; init; }
 
         public string? Text { get; set; }
 
