@@ -13,6 +13,7 @@ namespace Reviews.Application.Services
         {
             _databaseContext = databaseContext;
         }
+
         public async Task<Rating?> GetByProductId(Guid productId)
         {
             return await _databaseContext.Ratings

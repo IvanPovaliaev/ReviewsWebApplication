@@ -23,7 +23,7 @@ namespace Reviews.Application.Services
         public async Task<List<ReviewDTO>> GetReviewsByProductIdAsync(Guid id)
         {
             var reviews = await _databaseContext.Reviews
-                                                .Where(r => r.Status != ReviewStatus.Deleted && r.ProductId == id)
+                                                .Where(r => r.Status == ReviewStatus.Actual && r.ProductId == id)
                                                 .Include(r => r.Rating)
                                                 .ToListAsync();
 
