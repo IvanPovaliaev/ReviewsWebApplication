@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Reviews.Application.Helpers;
 using Reviews.Application.Interfaces;
+using Reviews.Application.Models;
 using Reviews.Application.Services;
 using Reviews.Application.Validations;
 using Reviews.Domain;
@@ -14,7 +15,7 @@ using System.Text.Json.Serialization;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,7 @@ internal class Program
         builder.Services.AddScoped<IReviewService, ReviewService>();
         builder.Services.AddScoped<IRatingService, RatingService>();
         builder.Services.AddScoped<ILoginService, LoginService>();
+        builder.Services.AddTransient<IHashService, HashService>();
         builder.Services.AddValidatorsFromAssemblyContaining<AddReviewDTOValidator>();
 
         var jwtOptions = builder.Configuration.GetSection("JwtOptions");
@@ -102,6 +104,21 @@ internal class Program
         app.UseAuthorization();
         app.MapControllers();
         app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+        using (var serviceScope = app.Services.CreateScope())
+        {
+            var services = serviceScope.ServiceProvider;
+            var loginService = services.GetRequiredService<ILoginService>();
+            var configuration = services.GetRequiredService<IConfiguration>();
+            var adminLoginDTO = new LoginDTO()
+            {
+                UserName = configuration["AdminSettings:Login"],
+                Password = configuration["AdminSettings:Password"],
+            };
+
+            await loginService.AddLoginAsync(adminLoginDTO);
+        }
+
         app.Run();
     }
 }

@@ -58,19 +58,5 @@ namespace Reviews.Domain.Helper
                 yield return rating;
             }
         }
-
-        public static List<Login> SetLogins()
-        {
-            var results = new List<Login>();
-            var firstLogin = new Login()
-            {
-                Id = 1,
-                UserName = "admin",
-                Password = "admin"
-            };
-
-            results.Add(firstLogin);
-            return results;
-        }
     }
 }
