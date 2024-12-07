@@ -5,63 +5,64 @@ using Reviews.Domain.Models;
 
 namespace Reviews.Application.Services
 {
-	public class RatingService : IRatingService
-	{
-		private readonly DataBaseContext _databaseContext;
+    public class RatingService : IRatingService
+    {
+        private readonly DataBaseContext _databaseContext;
 
-		public RatingService(DataBaseContext databaseContext)
-		{
-			_databaseContext = databaseContext;
-		}
-		public async Task<Rating?> GetByProductId(int productId)
-		{
-			return await _databaseContext.Ratings
-										 .FirstOrDefaultAsync(r => r.ProductId == productId);
-		}
+        public RatingService(DataBaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+        }
 
-		public async Task<bool> CreateRatingAsync(Review newReview)
-		{
-			var rating = await _databaseContext.Ratings.FirstOrDefaultAsync(r => r.ProductId == newReview.ProductId);
-			if (rating is not null)
-			{
-				return false;
-			}
+        public async Task<Rating?> GetByProductId(Guid productId)
+        {
+            return await _databaseContext.Ratings
+                                         .FirstOrDefaultAsync(r => r.ProductId == productId);
+        }
 
-			try
-			{
-				var newRating = new Rating()
-				{
-					ProductId = newReview.ProductId,
-					Grade = newReview.Grade,
-					CreationDate = newReview.CreationDate
-				};
+        public async Task<bool> CreateRatingAsync(Review newReview)
+        {
+            var rating = await _databaseContext.Ratings.FirstOrDefaultAsync(r => r.ProductId == newReview.ProductId);
+            if (rating is not null)
+            {
+                return false;
+            }
 
-				newRating.Reviews.Add(newReview);
+            try
+            {
+                var newRating = new Rating()
+                {
+                    ProductId = newReview.ProductId,
+                    Grade = newReview.Grade,
+                    CreationDate = newReview.CreationDate
+                };
 
-				await _databaseContext.Ratings.AddAsync(newRating);
-				await _databaseContext.SaveChangesAsync();
+                newRating.Reviews.Add(newReview);
 
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
+                await _databaseContext.Ratings.AddAsync(newRating);
+                await _databaseContext.SaveChangesAsync();
 
-		public async Task<bool> UpdateRatingAsync(Rating rating)
-		{
-			try
-			{
-				rating.UpdateGrade();
-				_databaseContext.Ratings.Update(rating);
-				await _databaseContext.SaveChangesAsync();
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
-	}
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateRatingAsync(Rating rating)
+        {
+            try
+            {
+                rating.UpdateGrade();
+                _databaseContext.Ratings.Update(rating);
+                await _databaseContext.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+    }
 }
