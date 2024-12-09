@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReviewsWebApplication</name>
+    </assembly>
+    <members>
+        <member name="M:ReviewsWebApplication.Controllers.AuthenticationController.Login(Reviews.Application.Models.LoginDTO)">
+            <summary>
+            Login to system
+            </summary>
+            <returns>Ok status code with token; Unauthorized if input data is incorrect</returns>
+            <param name="login">LoginDTO model</param>
+        </member>
+        <member name="M:ReviewsWebApplication.Controllers.ReviewController.GetAllAsync(System.Guid)">
+            <summary>
+            Get all review by product id
+            </summary>
+            <returns>Collection of ReviewDTO's for target product</returns>
+            <param name="productId">Product id</param>
+        </member>
+        <member name="M:ReviewsWebApplication.Controllers.ReviewController.GetReviewAsync(System.Int32)">
+            <summary>
+            Get review by id
+            </summary>
+            <param name="id">Review id</param>
+            <returns>Related ReviewDTO model</returns>
+        </member>
+        <member name="M:ReviewsWebApplication.Controllers.ReviewController.AddReviewAsync(Reviews.Application.Models.AddReviewDTO)">
+            <summary>
+            Add a new review
+            </summary>
+            <param name="newReview">newReview</param>
+            <returns>Operation status code</returns>
+        </member>
+        <member name="M:ReviewsWebApplication.Controllers.ReviewController.DeleteReviewAsync(System.Int32)">
+            <summary>
+            Delete review by id
+            </summary>
+            <param name="id">Review id</param>
+            <returns>True if review deleted successfully; otherwise return false</returns>
+        </member>
+    </members>
+</doc>

@@ -28,6 +28,12 @@ internal class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(options =>
         {
+            var basePath = AppContext.BaseDirectory;
+
+            var xmlPath = Path.Combine(basePath, "ReviewsWebApplicationI.xml");
+
+            options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+
             options.SwaggerDoc("V1", new OpenApiInfo
             {
                 Version = "V1",
