@@ -11,6 +11,7 @@
 5. JWT bearer-based authentication
 6. Automapper
 7. Swagger, Postman
+8. Хеширование данных с использованием алгоритма хеширования Argon2 ([Konscious.Security.Cryptography.Argon2](https://github.com/kmaragon/Konscious.Security.Cryptography))
 
 ## Работа с API
 Для работы с приложением необходимо авторизоваться под зарегистрированным логином и получить токен.
