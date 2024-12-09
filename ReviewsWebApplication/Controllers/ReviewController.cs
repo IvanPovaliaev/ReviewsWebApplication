@@ -8,6 +8,7 @@ namespace ReviewsWebApplication.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
 
     public class ReviewController : ControllerBase
     {
@@ -93,7 +94,6 @@ namespace ReviewsWebApplication.Controllers
         /// </summary>
         /// <param name="id">Review id</param>
         /// <returns>True if review deleted successfully; otherwise return false</returns>
-        [Authorize]
         [HttpDelete]
         public async Task<IActionResult> DeleteReviewAsync(int id)
         {

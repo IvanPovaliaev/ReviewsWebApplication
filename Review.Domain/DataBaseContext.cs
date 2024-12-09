@@ -35,10 +35,6 @@ namespace Reviews.Domain
 
             modelBuilder.Entity<Rating>()
                         .HasData(ratings);
-
-            var login = Initialization.SetLogins();
-            modelBuilder.Entity<Login>()
-                        .HasData(login);
         }
     }
 }
