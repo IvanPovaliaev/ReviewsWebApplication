@@ -5,8 +5,8 @@
 
 ## Технологии
 1. ASP.NET CORE WebApi
-2. Ms SQL
-3. EF Core
+2. MsSQL
+3. Entity Framework Core
 4. Linq
 5. JWT bearer-based authentication
 6. Automapper
