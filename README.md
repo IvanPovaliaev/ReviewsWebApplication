@@ -1,6 +1,6 @@
 # ReviewsWebApplication
 ## Описание
-Микросервис на C# ASP.NET CORE для управления отзывовами о посредством HTTP-запросов REST API.</br>
+Микросервис на C# ASP.NET CORE для управления отзывами о продуктах посредством HTTP-запросов REST API.</br>
 
 ## Технологии
 1. ASP.NET CORE WebApi
