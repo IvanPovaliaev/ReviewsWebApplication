@@ -30,7 +30,7 @@ internal class Program
         {
             var basePath = AppContext.BaseDirectory;
 
-            var xmlPath = Path.Combine(basePath, "ReviewsWebApplicationI.xml");
+            var xmlPath = Path.Combine(basePath, "ReviewsWebApplication.xml");
 
             options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 
